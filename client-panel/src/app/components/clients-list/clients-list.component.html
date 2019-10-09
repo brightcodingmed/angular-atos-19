@@ -1,0 +1,36 @@
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Full name</th>
+            <th>Infos</th>
+            <th>Balance</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let client of clients">
+            <td scope="row">
+                {{ client.fistName | titlecase }} {{ client.lastName | uppercase }}
+            </td>
+            <td>
+                <h4>
+                    <span class="badge badge-primary">Phone : {{ client.phone }}</span>
+                </h4>
+                <h4>
+                    <span class="badge badge-success">Email : {{ client.email }}</span>
+                </h4>
+            </td>
+            <td>{{ client.balance | currency }}</td>
+            <td class="text-right">
+                <a href="" class="btn btn-sm btn-warning">
+                    <i class="fa fa-pencil"></i>
+                </a>
+                <button class="btn btn-sm btn-dark">
+                    <i class="fa fa-times"></i>
+                </button>
+            </td>
+        </tr>
+       
+    </tbody>
+</table>
