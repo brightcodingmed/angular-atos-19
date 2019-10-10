@@ -1,5 +1,8 @@
+import { ClientService } from './../../services/client.service';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { FlashMessagesService } from 'angular2-flash-messages';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-clients-add',
@@ -16,9 +19,31 @@ export class ClientsAddComponent implements OnInit {
     balance: new FormControl()
   })
 
-  constructor() { }
+  constructor(
+     private clientService: ClientService,
+     private flashMessage: FlashMessagesService,
+     private router: Router
+    ) { }
 
   ngOnInit() {
+  }
+
+  createClient() {
+    this.clientService.persistClient(this.clientForm.value)
+        .then(() => {
+          this.flashMessage.show('Client created !', {
+            cssClass: 'alert-info',
+            timer: 3000
+          });
+          
+          this.router.navigate(['/clients']);
+        })
+        .catch((err) => {
+          this.flashMessage.show(err, {
+            cssClass: 'alert-danger',
+            timer: 3000
+          });
+        })
   }
 
 }
