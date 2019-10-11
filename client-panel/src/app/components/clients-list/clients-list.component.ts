@@ -1,3 +1,4 @@
+import { FlashMessagesService } from 'angular2-flash-messages';
 import { ClientService } from './../../services/client.service';
 import { Component, OnInit } from '@angular/core';
 
@@ -9,7 +10,10 @@ import { Component, OnInit } from '@angular/core';
 export class ClientsListComponent implements OnInit {
 
   clients: any[] = [];
-  constructor(private clientService: ClientService) { }
+  constructor(
+      private clientService: ClientService,
+      private flashMessage: FlashMessagesService 
+    ) { }
 
   ngOnInit() {
     this.getClients();
@@ -18,7 +22,18 @@ export class ClientsListComponent implements OnInit {
   getClients() {
     this.clientService.getClients()
         .subscribe((res: any[]) => {
+          console.log(res);
           this.clients = res;
+        })
+  }
+
+  deleteClient(id: string) {
+    this.clientService.destroyClient(id)
+        .then(() => {
+          this.flashMessage.show('Client deleted !', {
+            cssClass: 'alert-info',
+            timer: 3000
+          })
         })
   }
 

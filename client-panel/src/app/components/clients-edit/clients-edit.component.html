@@ -1,1 +1,52 @@
-<p>clients-edit works!</p>
+
+<div class="row my-2">
+    <div class="col-md-6">
+        <h1>Edit client</h1>
+    </div>
+    <div class="col-md-6 text-right">
+        <a routerLink="/clients" class="btn btn-link">
+            <i class="fa fa-arrow-left"></i>
+            Back to list
+        </a>
+    </div>
+</div>
+
+<div class="row my-2">
+    <div class="col-md-6 mx-auto">
+
+      <form (ngSubmit)="updateClient()" [formGroup]="clientForm">
+          <div class="form-group">
+              <label for="firstname">firstname</label>
+              <input formControlName="firstName" id="firstname" type="text" class="form-control">
+          </div>
+          <div class="alert alert-danger" *ngIf="clientForm.get('firstName').hasError('required') && clientForm.get('firstName').touched">
+                This field is Required
+          </div>
+    
+          <div class="form-group">
+              <label for="lastname">lastname</label>
+              <input formControlName="lastName" id="lastname" type="text" class="form-control">
+          </div>
+    
+          <div class="form-group">
+              <label for="phone">phone</label>
+              <input formControlName="phone" id="phone" type="text" class="form-control">
+          </div>
+    
+          <div class="form-group">
+              <label for="email">email</label>
+              <input formControlName="email" id="email" type="text" class="form-control">
+          </div>
+    
+          <div class="form-group">
+              <label for="balance">balance</label>
+              <input formControlName="balance" id="balance" type="text" class="form-control">
+          </div>
+
+          <button class="btn btn-dark btn-block">
+              <i class="fa fa-send"></i> Update client
+          </button>
+      </form>   
+
+    </div>
+</div>

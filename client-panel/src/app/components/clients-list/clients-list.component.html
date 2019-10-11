@@ -35,10 +35,10 @@
                     </td>
                     <td>{{ client.balance | currency }}</td>
                     <td class="text-right">
-                        <a href="" class="btn btn-sm btn-warning">
+                        <a [routerLink]="['/clients/edit', client.id]" class="btn btn-sm btn-warning">
                             <i class="fa fa-pencil"></i>
                         </a>
-                        <button class="btn btn-sm btn-dark">
+                        <button (click)=" deleteClient(client.id)" class="btn btn-sm btn-dark">
                             <i class="fa fa-times"></i>
                         </button>
                     </td>
