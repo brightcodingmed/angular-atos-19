@@ -15,4 +15,12 @@ export class AuthService {
   login(email, password) {
     return this.afAth.auth.signInWithEmailAndPassword(email, password)
   }
+
+  signOut() {
+    return this.afAth.auth.signOut();
+  }
+
+  isAutehticated() {
+    return this.afAth.user;
+  }
 }

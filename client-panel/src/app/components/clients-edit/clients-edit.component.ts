@@ -3,6 +3,8 @@ import { ClientService } from './../../services/client.service';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Observable, Subscription } from 'rxjs';
+
 
 @Component({
   selector: 'app-clients-edit',
@@ -12,7 +14,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class ClientsEditComponent implements OnInit {
 
   id: string = '';
- 
+  subscription: Subscription;
+  clientObservable: Observable<any>;
   clientForm = new FormGroup({
     firstName: new FormControl(null, [Validators.required, Validators.minLength(3)]),
     lastName: new FormControl(),
@@ -33,8 +36,10 @@ export class ClientsEditComponent implements OnInit {
   }
 
   editClient(id) {
-    this.clientService.getClientById<Client>(id)
-        .subscribe((res: Client) => {
+    this.clientObservable = this.clientService.getClientById<Client>(id);
+        
+   this.subscription = this.clientObservable
+    .subscribe((res: Client) => {
         this.clientForm.patchValue({
           firstName: res.firstName,
           lastName: res.lastName,
@@ -56,7 +61,7 @@ export class ClientsEditComponent implements OnInit {
   ngOnDestroy(): void {
     console.log('destroy');
     this.clientForm.reset();
-   
+    this.subscription.unsubscribe();
   }
 
 }
