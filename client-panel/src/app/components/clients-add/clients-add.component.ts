@@ -19,6 +19,8 @@ export class ClientsAddComponent implements OnInit {
     balance: new FormControl()
   })
 
+  loading: boolean = false;
+
   constructor(
      private clientService: ClientService,
      private flashMessage: FlashMessagesService,
@@ -29,6 +31,7 @@ export class ClientsAddComponent implements OnInit {
   }
 
   createClient() {
+    this.loading = true;
     this.clientService.persistClient(this.clientForm.value)
         .then(() => {
           this.flashMessage.show('Client created !', {
@@ -36,6 +39,7 @@ export class ClientsAddComponent implements OnInit {
             timer: 3000
           });
           
+          this.loading = false;
           this.router.navigate(['/clients']);
         })
         .catch((err) => {

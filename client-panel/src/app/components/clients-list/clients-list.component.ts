@@ -10,6 +10,7 @@ import { Component, OnInit } from '@angular/core';
 export class ClientsListComponent implements OnInit {
 
   clients: any[] = [];
+  somme: number = 0;
   constructor(
       private clientService: ClientService,
       private flashMessage: FlashMessagesService 
@@ -24,6 +25,7 @@ export class ClientsListComponent implements OnInit {
         .subscribe((res: any[]) => {
           console.log(res);
           this.clients = res;
+          this.totalBalance();
         })
   }
 
@@ -36,6 +38,12 @@ export class ClientsListComponent implements OnInit {
           })
         })
         .catch((err) => console.error(err))
+  }
+
+  totalBalance() {
+    this.somme = this.clients.reduce((total, client) => {
+        return total + +client.balance;
+    }, 0);
   }
 
 }
