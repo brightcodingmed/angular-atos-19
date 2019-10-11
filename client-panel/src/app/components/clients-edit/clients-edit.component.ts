@@ -2,7 +2,8 @@ import { Client } from './../../models/client';
 import { ClientService } from './../../services/client.service';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-clients-edit',
@@ -11,6 +12,7 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class ClientsEditComponent implements OnInit {
 
+  id: string = '';
   clientForm = new FormGroup({
     firstName: new FormControl(null, [Validators.required, Validators.minLength(3)]),
     lastName: new FormControl(),
@@ -19,24 +21,33 @@ export class ClientsEditComponent implements OnInit {
     balance: new FormControl()
   })
 
-  constructor(private clientService: ClientService, private route: ActivatedRoute) { }
+  constructor(
+    private clientService: ClientService, 
+    private route: ActivatedRoute,
+    private router: Router
+    ) { }
 
   ngOnInit() {
-    let id = this.route.snapshot.params.id;
-    this.editClient(id);
+    this.id = this.route.snapshot.params.id;
+    this.editClient(this.id);
   }
 
   editClient(id) {
-    this.clientService.getClientById(id)
-        .subscribe((res: Client) => {
-           this.clientForm.patchValue({
-            firstName: res.firstName,
-            lastName: res.lastName,
-            phone: res.phone,
-            email: res.email,
-            balance: res.balance
-           })
+    this.clientService.getClientById<Client>(id)
+        
+  }
+
+  updateClient() {
+    this.clientService.updateClient(this.id, this.clientForm.value)
+        .then(() => {
+          this.clientForm.reset();
+          this.router.navigate(['/clients']);
         })
+  }
+
+  ngOnDestroy(): void {
+    console.log('destroy');
+    this.clientForm.reset();
   }
 
 }

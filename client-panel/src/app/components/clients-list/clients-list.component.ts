@@ -35,6 +35,7 @@ export class ClientsListComponent implements OnInit {
             timer: 3000
           })
         })
+        .catch((err) => console.error(err))
   }
 
 }

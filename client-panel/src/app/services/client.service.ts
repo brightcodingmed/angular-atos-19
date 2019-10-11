@@ -31,7 +31,11 @@ export class ClientService {
       return this.clientCollection.doc(id).delete();
    } 
 
-   getClientById(id: string) {
+   getClientById<Client>(id: string) {
       return this.clientCollection.doc(id).valueChanges();
+   }
+
+   updateClient(id: string, data: Client) {
+     return this.clientCollection.doc(id).update(data);
    }
 }

@@ -13,7 +13,9 @@ import { LoginComponent } from './components/login/login.component';
 
 import { AngularFireModule } from '@angular/fire';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
-import { ReactiveFormsModule } from '@angular/forms';
+import { AngularFireAuthModule } from '@angular/fire/auth';
+
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FlashMessagesModule } from 'angular2-flash-messages';
 
 @NgModule({
@@ -31,7 +33,9 @@ import { FlashMessagesModule } from 'angular2-flash-messages';
     AppRoutingModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
+    AngularFireAuthModule,
     ReactiveFormsModule,
+    FormsModule,
     FlashMessagesModule.forRoot()
   ],
   providers: [],
